@@ -1,0 +1,2 @@
+################### Training the Vanilla Multi-domain Learning Network ###################
+CUDA_VISIBLE_DEVICES=<gpu-id> python train_net_mdl.py --model.name=mdl --model.dir ./saved_results/mdl --data.train ilsvrc_2012 omniglot aircraft cu_birds dtd quickdraw fungi vgg_flower --data.val ilsvrc_2012 omniglot aircraft cu_birds dtd quickdraw fungi vgg_flower --train.learning_rate=3e-2 --train.max_iter=240000 --train.cosine_anneal_freq=48000 --train.eval_freq=48000
