@@ -3,7 +3,7 @@ This is the implementation of [Universal Representation Learning from Multiple D
 
 
 ## Updates
-* Code for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) is now available!
+* Code and models for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) are now available!
 
 ## Dependencies
 This code requires the following:
