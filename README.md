@@ -1,5 +1,5 @@
-# Universal Representation Learning from Multiple Domains and Improving Task Adaptation for Cross-domain Few-shot Classification
-This is the implementation of [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) and [Improving Task Adaptation for Cross-domain Few-shot Learning](https://arxiv.org/pdf/2107.00358.pdf) introduced by [Wei-Hong Li](https://weihonglee.github.io), [Xialei Liu](https://xialeiliu.github.io), and [Hakan Bilen](http://homepages.inf.ed.ac.uk/hbilen).
+# Universal Representation Learning from Multiple Domains and Cross-domain Few-shot Learning with Task-specific Adapters
+This is the implementation of [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) and [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) introduced by [Wei-Hong Li](https://weihonglee.github.io), [Xialei Liu](https://xialeiliu.github.io), and [Hakan Bilen](http://homepages.inf.ed.ac.uk/hbilen).
 
 
 ## Updates
@@ -162,7 +162,7 @@ To test the feature extractor for varying-way-five-shot on the test splits of al
 python test_extractor.py --test.type 5shot --test.loss-opt ncc --test.feature-norm none --test.distance cos --model.name=url --model.dir <directory of url>
 ```
 
-## Improving Task Adaptation for Cross-domain Few-shot Learning
+## Cross-domain Few-shot Learning with Task-specific Adapters
 
 Coming soon!
 
