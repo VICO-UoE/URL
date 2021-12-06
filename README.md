@@ -183,7 +183,7 @@ If you use this code, please cite our papers:
 
 @article{li2021improving,
     author    = {Li, Wei-Hong and Liu, Xialei and Bilen, Hakan},
-    title     = {Improving Task Adaptation for Cross-domain Few-shot Learning},
+    title     = {Cross-domain Few-shot Learning with Task-specific Adapters},
     journal   = {arXiv preprint arXiv:2107.00358},
     year      = {2021}
 }
