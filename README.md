@@ -1,9 +1,10 @@
 # Universal Representation Learning from Multiple Domains and Cross-domain Few-shot Learning with Task-specific Adapters
-This is the implementation of [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) and [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) introduced by [Wei-Hong Li](https://weihonglee.github.io), [Xialei Liu](https://xialeiliu.github.io), and [Hakan Bilen](http://homepages.inf.ed.ac.uk/hbilen).
+This is the implementation of [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) (ICCV'21) and [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) (CVPR'22) introduced by [Wei-Hong Li](https://weihonglee.github.io), [Xialei Liu](https://mmcheng.net/xliu/), and [Hakan Bilen](http://homepages.inf.ed.ac.uk/hbilen).
 
 
 ## Updates
-* Code and models for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) are now available!
+* March'22, Code for [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) (CVPR'22) is now available! See [TSA](#cross-domain-few-shot-learning-with-task-specific-adapters).
+* Oct'21, Code and models for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) (ICCV'21) are now available!
 
 ## Dependencies
 This code requires the following:
@@ -85,33 +86,45 @@ To learn the universal feature extractor by distilling the knowledge from pre-tr
 </p>
 
 This step would run our Pre-classifier Alignment (PA) procedure per task to adapt the features to a discriminate space and build a Nearest Centroid Classifier (NCC) on the support set to classify query samples, run:
+
 ```
 ./scripts/test_resnet18_pa.sh
 ```
 
+## Cross-domain Few-shot Learning with Task-specific Adapters
+<p align="center">
+  <img src="./figures/tsa.png" style="width:100%">
+</p>
+<p align="center">
+    Figure 3. Cross-domain Few-shot Learning with <b>Task-specific Adapters (TSA)</b>.
+</p>
+
+We provide code for attaching task-specific adapters (TSA) to a single universal network learned from meta-train and learn the task-specific adapters on the support set. One can download our [pre-trained URL model](https://drive.google.com/file/d/1Dv8TX6iQ-BE2NMpfd0sQmH2q4mShmo1A/view?usp=sharing) and evaluate its feature adapted by residual adapters in matrix form and pre-classifier alignment, run:
+```
+./scripts/test_resnet18_tsa.sh
+```
 
 ## Expected Results
-Below are the results extracted from our papers. The results will vary from run to run by a percent or two up or down due to the fact that the Meta-Dataset reader generates different tasks each run, randomnes in training the networks and in PA optimization. Note, the results are updated with the up-to-date evaluation from Meta-Dataset. Make sure that you use the up-to-date code from the Meta-Dataset repository to convert the dataset and set ```shuffle_buffer_size=1000``` as mentioned in https://github.com/google-research/meta-dataset/issues/54.
+Below are the results extracted from our papers. The results will vary from run to run by a percent or two up or down due to the fact that the Meta-Dataset reader generates different tasks each run, randomnes in training the networks and in TSA and PA optimization. Note, the results are updated with the up-to-date evaluation from Meta-Dataset. Make sure that you use the up-to-date code from the Meta-Dataset repository to convert the dataset and set ```shuffle_buffer_size=1000``` as mentioned in https://github.com/google-research/meta-dataset/issues/54.
 
 **Models trained on all datasets**
 
-Test Datasets              |URL (Ours)                 |MDL                  |Best SDL              |URT [6]                  |SUR [4]                  |Simple CNAPS [5]         |CNAPS [2]                |BOHB-E [3]               |Proto-MAML [1]           
----------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------
-Avg rank                   |**1.2**                    |4.8                        |4.8                        |4.2                        |5.4                        |4.8                        |6.8                        |8.0                        |7.7                        
-ImageNet                   |**57.5±1.1**&nbsp;         |52.9±1.2&nbsp;             |54.3±1.1&nbsp;             |55.0±1.1&nbsp;             |54.5±1.1&nbsp;             |56.5±1.1&nbsp;             |50.8±1.1&nbsp;             |51.9±1.1&nbsp;             |46.5±1.1&nbsp;             
-Omniglot                   |**94.5±0.4**&nbsp;         |93.7±0.5&nbsp;             |93.8±0.5&nbsp;             |93.3±0.5&nbsp;             |93.0±0.5&nbsp;             |91.9±0.6&nbsp;             |91.7±0.5&nbsp;             |67.6±1.2&nbsp;             |82.7±1.0&nbsp;             
-Aircraft                   |**88.6±0.5**&nbsp;         |84.9±0.5&nbsp;             |84.5±0.5&nbsp;             |84.5±0.6&nbsp;             |84.3±0.5&nbsp;             |83.8±0.6&nbsp;             |83.7±0.6&nbsp;             |54.1±0.9&nbsp;             |75.2±0.8&nbsp;             
-Birds                      |**80.5±0.7**&nbsp;         |79.2±0.8&nbsp;             |70.6±0.9&nbsp;             |75.8±0.8&nbsp;             |70.4±1.1&nbsp;             |76.1±0.9&nbsp;             |73.6±0.9&nbsp;             |70.7±0.9&nbsp;             |69.9±1.0&nbsp;             
-Textures                   |**76.2±0.7**&nbsp;         |70.9±0.8&nbsp;             |72.1±0.7&nbsp;             |70.6±0.7&nbsp;             |70.5±0.7&nbsp;             |70.0±0.8&nbsp;             |59.5±0.7&nbsp;             |68.3±0.8&nbsp;             |68.2±0.8&nbsp;             
-Quick Draw                 |81.9±0.6&nbsp;             |81.7±0.6&nbsp;             |**82.6±0.6**&nbsp;         |82.1±0.6&nbsp;             |81.6±0.6&nbsp;             |78.3±0.7&nbsp;             |74.7±0.8&nbsp;             |50.3±1.0&nbsp;             |66.8±0.9&nbsp;             
-Fungi                      |**68.8±0.9**&nbsp;         |63.2±1.1&nbsp;             |65.9±1.0&nbsp;             |63.7±1.0&nbsp;             |65.0±1.0&nbsp;             |49.1±1.2&nbsp;             |50.2±1.1&nbsp;             |41.4±1.1&nbsp;             |42.0±1.2&nbsp;             
-VGG Flower                 |**92.1±0.5**&nbsp;         |88.7±0.6&nbsp;             |86.7±0.6&nbsp;             |88.3±0.6&nbsp;             |82.2±0.8&nbsp;             |91.3±0.6&nbsp;             |88.9±0.5&nbsp;             |87.3±0.6&nbsp;             |88.7±0.7&nbsp;             
-Traffic Sign               |**63.3±1.2**&nbsp;         |49.2±1.0&nbsp;             |47.1±1.1&nbsp;             |50.1±1.1&nbsp;             |49.8±1.1&nbsp;             |59.2±1.0&nbsp;             |56.5±1.1&nbsp;             |51.8±1.0&nbsp;             |52.4±1.1&nbsp;             
-MSCOCO                     |**54.0±1.0**&nbsp;         |47.3±1.1&nbsp;             |49.7±1.0&nbsp;             |48.9±1.1&nbsp;             |49.4±1.1&nbsp;             |42.4±1.1&nbsp;             |39.4±1.0&nbsp;             |48.0±1.0&nbsp;             |41.7±1.1&nbsp;             
-MNIST                      |94.5±0.5&nbsp;             |94.2±0.4&nbsp;             |91.0±0.5&nbsp;             |90.5±0.4&nbsp;             |**94.9±0.4**&nbsp;         |94.3±0.4&nbsp;             |-&nbsp;                |-&nbsp;                |-&nbsp;                
-CIFAR-10                   |71.9±0.7&nbsp;             |63.2±0.8&nbsp;             |65.4±0.8&nbsp;             |65.1±0.8&nbsp;             |64.2±0.9&nbsp;             |**72.0±0.8**&nbsp;         |-&nbsp;                |-&nbsp;                |-&nbsp;                
-CIFAR-100                  |**62.6±1.0**&nbsp;         |54.7±1.1&nbsp;             |56.2±1.0&nbsp;             |57.2±1.0&nbsp;             |57.1±1.1&nbsp;             |60.9±1.1&nbsp;             |-&nbsp;                |-&nbsp;                |-&nbsp;   
-
+Test Datasets              |TSA (Ours)                 |URL (Ours)                    |MDL                        |Best SDL                   |tri-M [8]                  |FLUTE [7]                  |URT [6]                    |SUR [5]                    |Transductive CNAPS [4]     |Simple CNAPS [3]           |CNAPS [2]                  
+---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------
+Avg rank                   |**1.5**                    |2.7                        |7.1                        |6.7                        |5.5                        |5.1                        |6.7                        |6.9                        |5.7                        |7.2                        |-                        
+ImageNet                   |**57.4±1.1**&nbsp;         |**57.5±1.1**&nbsp;         |52.9±1.2&nbsp;             |54.3±1.1&nbsp;             |**58.6±1.0**&nbsp;         |51.8±1.1&nbsp;             |55.0±1.1&nbsp;             |54.5±1.1&nbsp;             |**57.9±1.1**&nbsp;         |56.5±1.1&nbsp;             |50.8±1.1&nbsp;             
+Omniglot                   |**95.0±0.4**&nbsp;         |**94.5±0.4**&nbsp;         |93.7±0.5&nbsp;             |93.8±0.5&nbsp;             |92.0±0.6&nbsp;             |93.2±0.5&nbsp;             |93.3±0.5&nbsp;             |93.0±0.5&nbsp;             |94.3±0.4&nbsp;             |91.9±0.6&nbsp;             |91.7±0.5&nbsp;             
+Aircraft                   |**89.3±0.4**&nbsp;         |88.6±0.5&nbsp;             |84.9±0.5&nbsp;             |84.5±0.5&nbsp;             |82.8±0.7&nbsp;             |87.2±0.5&nbsp;             |84.5±0.6&nbsp;             |84.3±0.5&nbsp;             |84.7±0.5&nbsp;             |83.8±0.6&nbsp;             |83.7±0.6&nbsp;             
+Birds                      |**81.4±0.7**&nbsp;         |**80.5±0.7**&nbsp;         |79.2±0.8&nbsp;             |70.6±0.9&nbsp;             |75.3±0.8&nbsp;             |79.2±0.8&nbsp;             |75.8±0.8&nbsp;             |70.4±1.1&nbsp;             |78.8±0.7&nbsp;             |76.1±0.9&nbsp;             |73.6±0.9&nbsp;             
+Textures                   |**76.7±0.7**&nbsp;         |**76.2±0.7**&nbsp;         |70.9±0.8&nbsp;             |72.1±0.7&nbsp;             |71.2±0.8&nbsp;             |68.8±0.8&nbsp;             |70.6±0.7&nbsp;             |70.5±0.7&nbsp;             |66.2±0.8&nbsp;             |70.0±0.8&nbsp;             |59.5±0.7&nbsp;             
+Quick Draw                 |**82.0±0.6**&nbsp;         |**81.9±0.6**&nbsp;         |81.7±0.6&nbsp;             |**82.6±0.6**&nbsp;         |77.3±0.7&nbsp;             |79.5±0.7&nbsp;             |**82.1±0.6**&nbsp;         |81.6±0.6&nbsp;             |77.9±0.6&nbsp;             |78.3±0.7&nbsp;             |74.7±0.8&nbsp;             
+Fungi                      |**67.4±1.0**&nbsp;         |**68.8±0.9**&nbsp;         |63.2±1.1&nbsp;             |65.9±1.0&nbsp;             |48.5±1.0&nbsp;             |58.1±1.1&nbsp;             |63.7±1.0&nbsp;             |65.0±1.0&nbsp;             |48.9±1.2&nbsp;             |49.1±1.2&nbsp;             |50.2±1.1&nbsp;             
+VGG Flower                 |**92.2±0.5**&nbsp;         |**92.1±0.5**&nbsp;         |88.7±0.6&nbsp;             |86.7±0.6&nbsp;             |90.5±0.5&nbsp;             |**91.6±0.6**&nbsp;         |88.3±0.6&nbsp;             |82.2±0.8&nbsp;             |**92.3±0.4**&nbsp;         |91.3±0.6&nbsp;             |88.9±0.5&nbsp;             
+Traffic Sign               |**83.5±0.9**&nbsp;         |63.3±1.2&nbsp;             |49.2±1.0&nbsp;             |47.1±1.1&nbsp;             |63.0±1.0&nbsp;             |58.4±1.1&nbsp;             |50.1±1.1&nbsp;             |49.8±1.1&nbsp;             |59.7±1.1&nbsp;             |59.2±1.0&nbsp;             |56.5±1.1&nbsp;             
+MSCOCO                     |**55.8±1.1**&nbsp;         |54.0±1.0&nbsp;             |47.3±1.1&nbsp;             |49.7±1.0&nbsp;             |52.8±1.1&nbsp;             |50.0±1.0&nbsp;             |48.9±1.1&nbsp;             |49.4±1.1&nbsp;             |42.5±1.1&nbsp;             |42.4±1.1&nbsp;             |39.4±1.0&nbsp;             
+MNIST                      |**96.7±0.4**&nbsp;         |94.5±0.5&nbsp;             |94.2±0.4&nbsp;             |91.0±0.5&nbsp;             |96.2±0.3&nbsp;             |95.6±0.5&nbsp;             |90.5±0.4&nbsp;             |94.9±0.4&nbsp;             |94.7±0.3&nbsp;             |94.3±0.4&nbsp;             |-         
+CIFAR-10                   |**80.6±0.8**&nbsp;         |71.9±0.7&nbsp;             |63.2±0.8&nbsp;             |65.4±0.8&nbsp;             |75.4±0.8&nbsp;             |78.6±0.7&nbsp;             |65.1±0.8&nbsp;             |64.2±0.9&nbsp;             |73.6±0.7&nbsp;             |72.0±0.8&nbsp;             |-         
+CIFAR-100                  |**69.6±1.0**&nbsp;         |62.6±1.0&nbsp;             |54.7±1.1&nbsp;             |56.2±1.0&nbsp;             |62.0±1.0&nbsp;             |67.1±1.0&nbsp;             |57.2±1.0&nbsp;             |57.1±1.1&nbsp;             |61.8±1.0&nbsp;             |60.9±1.1&nbsp;             |- 
 
 <div style="text-align:justify; font-size:80%">
     <p>
@@ -121,23 +134,29 @@ CIFAR-100                  |**62.6±1.0**&nbsp;         |54.7±1.1&nbsp;        
         [2] James Requeima, Jonathan Gordon, John Bronskill, Sebastian Nowozin, Richard E. Turner; <a href="https://arxiv.org/abs/1906.07697">Fast and Flexible Multi-Task Classification Using Conditional Neural Adaptive Processes</a>; NeurIPS 2019.
     </p>
     <p>
-        [3] Tonmoy Saikia, Thomas Brox, Cordelia Schmid; <a href="https://arxiv.org/abs/2001.07926">Optimized Generic Feature Learning for Few-shot Classification across Domains</a>; arXiv 2020.
+        [3] Peyman Bateni, Raghav Goyal, Vaden Masrani, Frank Wood, Leonid Sigal; <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Bateni_Improved_Few-Shot_Visual_Classification_CVPR_2020_paper.html">Improved Few-Shot Visual Classification</a>; CVPR 2020.
     </p>
     <p>
-        [4] Nikita Dvornik, Cordelia Schmid, Julien Mairal; <a href="https://arxiv.org/abs/2003.09338">Selecting Relevant Features from a Multi-domain Representation for Few-shot Classification</a>; ECCV 2020.
+        [4] Peyman Bateni, Jarred Barber, Jan-Willem van de Meent, Frank Wood; <a href="https://openaccess.thecvf.com/content/WACV2022/papers/Bateni_Enhancing_Few-Shot_Image_Classification_With_Unlabelled_Examples_WACV_2022_paper.pdf">Enhancing Few-Shot Image Classification with Unlabelled Examples</a>; WACV 2022.
     </p>
     <p>
-        [5] Peyman Bateni, Raghav Goyal, Vaden Masrani, Frank Wood, Leonid Sigal; <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Bateni_Improved_Few-Shot_Visual_Classification_CVPR_2020_paper.html">Improved Few-Shot Visual Classification</a>; CVPR 2020.
+        [5] Nikita Dvornik, Cordelia Schmid, Julien Mairal; <a href="ttps://arxiv.org/abs/2003.09338">Selecting Relevant Features from a Multi-domain Representation for Few-shot Classification</a>; ECCV 2020.
     </p>
     <p>
         [6] Lu Liu, William Hamilton, Guodong Long, Jing Jiang, Hugo Larochelle; <a href="https://arxiv.org/abs/2006.11702">Universal Representation Transformer Layer for Few-Shot Image Classification</a>; ICLR 2021.
     </p>
+    <p>
+        [7] Eleni Triantafillou, Hugo Larochelle, Richard Zemel, Vincent Dumoulin; <a href="https://arxiv.org/pdf/2105.07029.pdf">Learning a Universal Template for Few-shot Dataset Generalization</a>; ICML 2021.
+    </p>
+    <p>
+        [8] Yanbin Liu, Juho Lee, Linchao Zhu, Ling Chen, Humphrey Shi, Yi Yang; <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Liu_A_Multi-Mode_Modulator_for_Multi-Domain_Few-Shot_Classification_ICCV_2021_paper.pdf">A Multi-Mode Modulator for Multi-Domain Few-Shot Classification</a>; ICCV 2021.
+    </p>
 </div>
 
 
-### Other Usage
+## Other Usage
 
-#### Train a Vanilla Multi-domain Learning Network (optional)
+### Train a Vanilla Multi-domain Learning Network (optional)
 To train a vanilla multi-domain learning network (MDL) on Meta-Dataset, run:
 
 ```
@@ -153,7 +172,7 @@ To evaluate the feature extractor with NCC and cosine similarity, run:
 python test_extractor.py --test.loss-opt ncc --test.feature-norm none --test.distance cos --model.name=url --model.dir <directory of url> 
 ```
 
-#### Five-shot and Five-way-one-shot Meta-test (optional)
+### Five-shot and Five-way-one-shot Meta-test (optional)
 One can evaluate the feature extractor in meta-testing for five-shot or five-way-one-shot setting by setting ```--test.type``` as '5shot' or '1shot', respectively.
 
 To test the feature extractor for varying-way-five-shot on the test splits of all datasets, run:
@@ -162,12 +181,8 @@ To test the feature extractor for varying-way-five-shot on the test splits of al
 python test_extractor.py --test.type 5shot --test.loss-opt ncc --test.feature-norm none --test.distance cos --model.name=url --model.dir <directory of url>
 ```
 
-## Cross-domain Few-shot Learning with Task-specific Adapters
-
-Coming soon!
-
 ## Acknowledge
-We thank authors of [Meta-Dataset](https://github.com/google-research/meta-dataset) and [SUR](https://github.com/dvornikita/SUR) for their source code. 
+We thank authors of [Meta-Dataset](https://github.com/google-research/meta-dataset), [SUR](https://github.com/dvornikita/SUR), [Residual Adapter](https://github.com/srebuffi/residual_adapters) for their source code. 
 
 ## Citation
 If you use this code, please cite our papers:
@@ -181,11 +196,12 @@ If you use this code, please cite our papers:
     pages     = {9526-9535}
 }
 
-@article{li2021improving,
+@inproceedings{li2022TaskSpecificAdapter,
     author    = {Li, Wei-Hong and Liu, Xialei and Bilen, Hakan},
     title     = {Cross-domain Few-shot Learning with Task-specific Adapters},
-    journal   = {arXiv preprint arXiv:2107.00358},
-    year      = {2021}
+    booktitle = {IEEE/CVF International Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2022}
 }
 
 @inproceedings{li2020knowledge,

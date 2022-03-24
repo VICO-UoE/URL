@@ -1,3 +1,11 @@
+'''
+pa.py
+Created by Wei-Hong Li [https://weihonglee.github.io]
+This code allows you to attach pre-classifier alignment (PA) mapping to a pretrained backbone
+and learn it on the support set to adapt features to a discriminative space.
+'Universal Representation Learning from Multiple Domains for Few-shot Classification'
+(https://arxiv.org/pdf/2103.13841.pdf)
+'''
 import torch
 import numpy as np
 import math

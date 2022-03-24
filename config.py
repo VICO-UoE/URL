@@ -82,6 +82,16 @@ parser.add_argument('--test.loss-opt', type=str, choices=['ncc', 'knn', 'lr', 's
 parser.add_argument('--test.feature-norm', type=str, choices=['l2', 'none'], default='none', metavar='LOSS_FN',
                     help="normalization options")
 
+# task-specific adapters
+parser.add_argument('--test.tsa-ad-type', type=str, choices=['residual', 'serial', 'none'], default='none', metavar='TSA_AD_TYPE',
+                    help="adapter type")
+parser.add_argument('--test.tsa-ad-form', type=str, choices=['matrix', 'vector', 'none'], default='matrix', metavar='TSA_AD_FORM',
+                    help="adapter form")
+parser.add_argument('--test.tsa-opt', type=str, choices=['alpha', 'beta', 'alpha+beta'], default='alpha+beta', metavar='TSA_OPT',
+                    help="task adaptation option")
+parser.add_argument('--test.tsa-init', type=str, choices=['random', 'eye'], default='eye', metavar='TSA_INIT',
+                    help="initialization for adapter")
+
 # path args
 parser.add_argument('--model.dir', default='', type=str, metavar='PATH',
                     help='path of single domain learning models')
