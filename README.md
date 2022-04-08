@@ -187,13 +187,11 @@ We thank authors of [Meta-Dataset](https://github.com/google-research/meta-datas
 ## Citation
 If you use this code, please cite our papers:
 ```
-@inproceedings{li2021Universal,
+@article{li2022Universal,
     author    = {Li, Wei-Hong and Liu, Xialei and Bilen, Hakan},
-    title     = {Universal Representation Learning From Multiple Domains for Few-Shot Classification},
-    booktitle = {IEEE/CVF International Conference on Computer Vision (ICCV)},
-    month     = {October},
-    year      = {2021},
-    pages     = {9526-9535}
+    title     = {Universal Representations: A Unified Look at Multiple Task and Domain Learning},
+    journal   = {arXiv preprint arXiv:2204.02744},
+    year      = {2022}
 }
 
 @inproceedings{li2022TaskSpecificAdapter,
@@ -202,6 +200,15 @@ If you use this code, please cite our papers:
     booktitle = {IEEE/CVF International Conference on Computer Vision and Pattern Recognition (CVPR)},
     month     = {June},
     year      = {2022}
+}
+
+@inproceedings{li2021Universal,
+    author    = {Li, Wei-Hong and Liu, Xialei and Bilen, Hakan},
+    title     = {Universal Representation Learning From Multiple Domains for Few-Shot Classification},
+    booktitle = {IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2021},
+    pages     = {9526-9535}
 }
 
 @inproceedings{li2020knowledge,
