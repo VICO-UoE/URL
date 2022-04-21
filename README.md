@@ -44,7 +44,7 @@ This code requires the following:
 </p>
 
 
-### Train the Universal Representation Learning Network (URL)
+### Train the Universal Representation Learning Network
 
 1. The easiest way is to download our [pre-trained URL model](https://drive.google.com/file/d/1Dv8TX6iQ-BE2NMpfd0sQmH2q4mShmo1A/view?usp=sharing) and evaluate its feature using our Pre-classifier Alignment (PA). To download the pretrained URL model, one can use `gdown` (installed by ```pip install gdown```) and execute the following command in the root directory of this project:
     ```
@@ -158,7 +158,7 @@ CIFAR-100                  |**69.6±1.0**&nbsp;         |62.6±1.0&nbsp;        
 
 ## Other Usage
 
-### Train a Vanilla Multi-domain Learning Network (optional)
+### Train a Vanilla Multi-domain Learning Network
 To train a vanilla multi-domain learning network (MDL) on Meta-Dataset, run:
 
 ```
