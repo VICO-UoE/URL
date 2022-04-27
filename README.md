@@ -217,7 +217,6 @@ If you use this code, please cite our papers:
     author    = {Li, Wei-Hong and Bilen, Hakan},
     title     = {Knowledge distillation for multi-task learning},
     booktitle = {European Conference on Computer Vision (ECCV) Workshop},
-    year      = {2020},
-    xcode     = {https://github.com/VICO-UoE/KD4MTL}
+    year      = {2020}
 }
 ```
