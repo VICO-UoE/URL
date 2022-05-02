@@ -1,10 +1,68 @@
-# Universal Representation Learning from Multiple Domains and Cross-domain Few-shot Learning with Task-specific Adapters
-This is the implementation of [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) (ICCV'21) and [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) (CVPR'22) introduced by [Wei-Hong Li](https://weihonglee.github.io), [Xialei Liu](https://mmcheng.net/xliu/), and [Hakan Bilen](http://homepages.inf.ed.ac.uk/hbilen).
+# Universal Representation Learning and Task-specific Adaptation for Few-shot Learning 
+A universal representation learning algorithm that learns a set of well-generalized representations via a single universal network from multiple diverse visual datasets and task-specific adaptation techniques for few-shot learning.
 
+<p align="center">
+  <img src="./figures/fsl.png" style="width:60%">
+</p>
+
+> [**Universal Representation Learning from Multiple Domains for Few-shot Classification**](https://arxiv.org/pdf/2103.13841),            
+> Wei-Hong Li, Xialei Liu, Hakan Bilen,        
+> *ICCV 2021 ([arXiv 2103.13841](https://arxiv.org/pdf/2103.13841))*  
+>
+> [**Cross-domain Few-shot Learning with Task-specific Adapters**](https://arxiv.org/pdf/2107.00358),            
+> Wei-Hong Li, Xialei Liu, Hakan Bilen,        
+> *CVPR 2022 ([arXiv 2107.00358](https://arxiv.org/pdf/2107.00358))*  
+>
+> [**Universal Representations: A Unified Look at Multiple Task and Domain Learning**](https://arxiv.org/pdf/2204.02744),            
+> Wei-Hong Li, Xialei Liu, Hakan Bilen,        
+> *Preprint 2022 ([arXiv 2204.02744](https://arxiv.org/pdf/2204.02744))* 
 
 ## Updates
 * March'22, Code for [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) (CVPR'22) is now available! See [TSA](#cross-domain-few-shot-learning-with-task-specific-adapters).
 * Oct'21, Code and models for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) (ICCV'21) are now available!
+
+## Features at a glance
+
+- We train a single universal (task-agnostic) network on 8 visual (training) datasets on Meta-dataset: ImageNet, Omniglot, Aircraft, Birds, Textures, Quick Draw, Fungi, VGG Flower, with state-of-the-art performances on all (13) testing datasets for few-shot learning.
+
+- During meta-testing, the universal representations can be efficiently adapted by our proposed pre-classifier alignment (a linear transformation) learned on the support set to transform the representations to a more discriminative space.
+
+- We propose to attach a set of light weight task-specific adapters to the universal network (the universal network can be learned from multiple datasets or one single diverse dataset, e.g. ImageNet) and learn task-specific adapters on the support set from scratch for adapting the few-shot model to the tasks from unseen domains.
+
+- We systematically study various combinations of several design choices for task-specific adaptation, which have not been explored before, including adapter connection types (serial or residual), parameterizations (matrix and its decomposed variations, channelwise operations) and estimation of task-specific parameters.
+
+- Attaching parameteric adapters in matrix form to convolutional layers with residual connections significantly boosts the state-of-the-art performance in most domains, especially resulting in superior performance in unseen domains on Meta-Dataset
+
+- In this repo, we provide code of the URL, the best task adaptation strategy in TSA, and other baselines like SDL, vanilla MDL and other evaluation settings. 
+
+## Main results on [Meta-dataset](https://github.com/google-research/meta-dataset)
+
+- Multi-domain setting (meta-train on 8 datasets and meta-test on 13 datasets).
+
+Test Datasets              |TSA (Ours)                 |URL (Ours)                 |MDL                        |Best SDL                   |tri-M [8]                  |FLUTE [7]                  |URT [6]                    |SUR [5]                    |Transductive CNAPS [4]     |Simple CNAPS [3]           |CNAPS [2]                  
+---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------
+Avg rank                   |**1.5**                    |2.7                        |7.1                        |6.7                        |5.5                        |5.1                        |6.7                        |6.9                        |5.7                        |7.2                        |-                        
+Avg Seen                   |**80.2**                   |80.0                       |76.9                       |76.3                       |74.5                       |76.2                       |76.7                       |75.2                       |75.1                       |74.6                       |71.6                       
+Avg Unseen                 |**77.2**                   |69.3                       |61.7                       |61.9                       |69.9                       |69.9                       |62.4                       |63.1                       |66.5                       |65.8                       |-                        
+Avg All                    |**79.0**                   |75.9                       |71.1                       |70.8                       |72.7                       |73.8                       |71.2                       |70.5                       |71.8                       |71.2                       |-                        
+
+
+- Single-domain setting (Meta-train on ImageNet and meta-test on 13 datasets).
+
+Test Datasets              |TSA-ResNet34 (Ours)        |TSA-ResNet18 (Ours)        |CTX-ResNet34 [10]          |ProtoNet-ResNet34 [10]     |FLUTE [7]                  |BOHB [9]                   |ALFA+fo-Proto-MAML [1]     |fo-Proto-MAML [1]          |ProtoNet [1]               |Finetune [1]               
+---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------|---------------------------
+Avg rank                   |**1.5**                    |2.8                        |1.8                        |5.5                        |8.9                        |6.0                        |5.3                        |7.0                        |8.3                        |7.9                        
+Avg Seen                   |**63.7**                   |59.5                       |62.8                       |53.7                       |46.9                       |51.9                       |52.8                       |49.5                       |50.5                       |45.8                       
+Avg Unseen                 |**76.2**                   |71.9                       |75.6                       |61.1                       |53.2                       |60.0                       |62.4                       |58.4                       |56.7                       |58.2                       
+Avg All                    |**74.9**                   |70.7                       |74.3                       |60.4                       |52.6                       |59.2                       |61.4                       |57.5                       |56.1                       |57.0                       
+
+## Model Zoo
+
+- [Single-domain networks (one for each dataset)](https://drive.google.com/file/d/1MvUcvQ8OQtoOk1MIiJmK6_G8p4h8cbY9/view?usp=sharing)
+
+- [A single universal network (URL) learned from 8 training datasets](https://drive.google.com/file/d/1Dv8TX6iQ-BE2NMpfd0sQmH2q4mShmo1A/view?usp=sharing)
+
+- ImageNet model learned with ResNet34 and higher resolution images (224x224) like CTX [10], coming soon!
 
 ## Dependencies
 This code requires the following:
@@ -152,6 +210,12 @@ CIFAR-100                  |**69.6±1.0**&nbsp;         |62.6±1.0&nbsp;        
     </p>
     <p>
         [8] Yanbin Liu, Juho Lee, Linchao Zhu, Ling Chen, Humphrey Shi, Yi Yang; <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Liu_A_Multi-Mode_Modulator_for_Multi-Domain_Few-Shot_Classification_ICCV_2021_paper.pdf">A Multi-Mode Modulator for Multi-Domain Few-Shot Classification</a>; ICCV 2021.
+    </p>
+    <p>
+        [9] Tonmoy Saikia, Thomas Brox, Cordelia Schmid; <a href="https://arxiv.org/abs/2001.07926">Optimized Generic Feature Learning for Few-shot Classification across Domains</a>; arXiv 2020.
+    </p>
+    <p>
+        [10] Carl Doersch, Ankush Gupta, Andrew Zisserman; <a href="https://arxiv.org/abs/2007.11498">CrossTransformers: spatially-aware few-shot transfer</a>; NeurIPS 2020.
     </p>
 </div>
 
