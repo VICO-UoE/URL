@@ -247,6 +247,8 @@ To test the feature extractor for varying-way-five-shot on the test splits of al
 python test_extractor.py --test.type 5shot --test.loss-opt ncc --test.feature-norm none --test.distance cos --model.name=url --model.dir <directory of url>
 ```
 
+If one wants to evaluate our proposed URL and TSA method in 5-shot or 5-way-1-shot settings, please use ```test_extractor_pa.py``` and ```test_extractor_tsa.py``` with setting ```--test.type``` as '5shot' or '1shot'.
+
 ## Acknowledge
 We thank authors of [Meta-Dataset](https://github.com/google-research/meta-dataset), [SUR](https://github.com/dvornikita/SUR), [Residual Adapter](https://github.com/srebuffi/residual_adapters) for their source code. 
 
