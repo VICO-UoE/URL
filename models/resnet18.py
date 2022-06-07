@@ -120,7 +120,8 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
-        return x.squeeze()
+        # return x.squeeze()
+        return x.flatten(1)
 
     def get_state_dict(self):
         """Outputs all the state elements"""
