@@ -74,7 +74,7 @@ parser.add_argument('--dump.size', type=int, default=600, metavar='DUMP_SIZE',
 parser.add_argument('--test.size', type=int, default=600, metavar='TEST_SIZE',
                     help='The number of test episodes sampled')
 parser.add_argument('--test.mode', type=str, choices=['mdl', 'sdl'], default='mdl', metavar='TEST_MODE',
-                    help="Test mode")
+                    help="Test mode: multi-domain learning (mdl) or single-domain learning (sdl) settings")
 parser.add_argument('--test.type', type=str, choices=['standard', '1shot', '5shot'], default='standard', metavar='LOSS_FN',
                     help="meta-test type, standard varying number of ways and shots as in Meta-Dataset, 1shot for five-way-one-shot and 5shot for varying-way-five-shot evaluation.")
 parser.add_argument('--test.distance', type=str, choices=['cos', 'l2'], default='cos', metavar='DISTANCE_FN',
