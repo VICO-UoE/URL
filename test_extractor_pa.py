@@ -34,7 +34,12 @@ def main():
     # Setting up datasets
     trainsets, valsets, testsets = args['data.train'], args['data.val'], args['data.test']
     testsets = ALL_METADATASET_NAMES # comment this line to test the model on args['data.test']
-    trainsets = TRAIN_METADATASET_NAMES
+    if args['test.mode'] == 'mdl':
+        # multi-domain learning setting, meta-train on 8 training sets
+        trainsets = TRAIN_METADATASET_NAMES
+    elif args['test.mode'] == 'sdl':
+        # single-domain learning setting, meta-train on ImageNet
+        trainsets = ['ilsvrc_2012']
     test_loader = MetaDatasetEpisodeReader('test', trainsets, trainsets, testsets, test_type=args['test.type'])
     model = get_model(None, args)
     checkpointer = CheckPointer(args, model, optimizer=None)
@@ -49,7 +54,7 @@ def main():
     with tf.compat.v1.Session(config=config) as session:
         # go over each test domain
         for dataset in testsets:
-            if dataset in TRAIN_METADATASET_NAMES:
+            if dataset in trainsets:
                 lr = 0.1
             else:
                 lr = 1
