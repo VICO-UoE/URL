@@ -22,7 +22,6 @@ A universal representation learning algorithm that learns a set of well-generali
 * Oct'21, Code and models for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) (ICCV'21) are now available!
 
 ## Features at a glance
-
 - We train a single universal (task-agnostic) network on 8 visual (training) datasets on Meta-dataset: ImageNet, Omniglot, Aircraft, Birds, Textures, Quick Draw, Fungi, VGG Flower, with state-of-the-art performances on all (13) testing datasets for few-shot learning.
 
 - During meta-testing, the universal representations can be efficiently adapted by our proposed pre-classifier alignment (a linear transformation) learned on the support set to transform the representations to a more discriminative space.
@@ -36,7 +35,6 @@ A universal representation learning algorithm that learns a set of well-generali
 - In this repo, we provide code of the URL, the best task adaptation strategy in TSA, and other baselines like SDL, vanilla MDL and other evaluation settings. 
 
 ## Main results on [Meta-dataset](https://github.com/google-research/meta-dataset)
-
 - Multi-domain setting (meta-train on 8 datasets and meta-test on 13 datasets).
 
 Test Datasets              |TSA (Ours)                 |URL (Ours)                 |MDL                        |Best SDL                   |tri-M [8]                  |FLUTE [7]                  |URT [6]                    |SUR [5]                    |Transductive CNAPS [4]     |Simple CNAPS [3]           |CNAPS [2]                  
@@ -57,7 +55,6 @@ Avg Unseen                 |**76.2**                   |71.9                    
 Avg All                    |**74.9**                   |70.7                       |74.3                       |60.4                       |52.6                       |59.2                       |61.4                       |57.5                       |56.1                       |57.0                       
 
 ## Model Zoo
-
 - [Single-domain networks (one for each dataset)](https://drive.google.com/file/d/1MvUcvQ8OQtoOk1MIiJmK6_G8p4h8cbY9/view?usp=sharing)
 
 - [A single universal network (URL) learned from 8 training datasets](https://drive.google.com/file/d/1Dv8TX6iQ-BE2NMpfd0sQmH2q4mShmo1A/view?usp=sharing)
@@ -78,7 +75,6 @@ This code requires the following:
     * To test unseen domain (out-of-domain) performance on additional datasets, i.e. MNIST, CIFAR-10 and CIFAR-100, follow the installation instruction in the [CNAPs repository](https://github.com/cambridge-mlg/cnaps) to get these datasets.
 
 ## Initialization
-
 1. Before doing anything, first run the following commands.
     ```
     ulimit -n 50000
@@ -92,8 +88,6 @@ This code requires the following:
 
 
 ## Universal Representation Learning from Multiple Domains for Few-shot Classification
-
-
 <p align="center">
   <img src="./figures/universal.png" style="width:60%">
 </p>
@@ -103,7 +97,6 @@ This code requires the following:
 
 
 ### Train the Universal Representation Learning Network
-
 1. The easiest way is to download our [pre-trained URL model](https://drive.google.com/file/d/1Dv8TX6iQ-BE2NMpfd0sQmH2q4mShmo1A/view?usp=sharing) and evaluate its feature using our Pre-classifier Alignment (PA). To download the pretrained URL model, one can use `gdown` (installed by ```pip install gdown```) and execute the following command in the root directory of this project:
     ```
     gdown https://drive.google.com/uc?id=1Dv8TX6iQ-BE2NMpfd0sQmH2q4mShmo1A && md5sum url.zip && unzip url.zip -d ./saved_results/ && rm url.zip
@@ -251,6 +244,9 @@ If one wants to evaluate our proposed URL and TSA method in 5-shot or 5-way-1-sh
 
 ## Acknowledge
 We thank authors of [Meta-Dataset](https://github.com/google-research/meta-dataset), [SUR](https://github.com/dvornikita/SUR), [Residual Adapter](https://github.com/srebuffi/residual_adapters) for their source code. 
+
+## Contact
+For any question, you can contact [Wei-Hong Li](https://weihonglee.github.io).
 
 ## Citation
 If you use this code, please cite our papers:
