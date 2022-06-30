@@ -5,17 +5,17 @@ A universal representation learning algorithm that learns a set of well-generali
   <img src="./figures/fsl.png" style="width:60%">
 </p>
 
-> [**Universal Representation Learning from Multiple Domains for Few-shot Classification**](https://arxiv.org/pdf/2103.13841),            
+> [**Universal Representation Learning from Multiple Domains for Few-shot Classification**](https://arxiv.org/abs/2103.13841),            
 > Wei-Hong Li, Xialei Liu, Hakan Bilen,        
-> *ICCV 2021 ([arXiv 2103.13841](https://arxiv.org/pdf/2103.13841))*  
+> *ICCV 2021 ([arXiv 2103.13841](https://arxiv.org/abs/2103.13841))*  
 >
-> [**Cross-domain Few-shot Learning with Task-specific Adapters**](https://arxiv.org/pdf/2107.00358),            
+> [**Cross-domain Few-shot Learning with Task-specific Adapters**](https://arxiv.org/abs/2107.00358),            
 > Wei-Hong Li, Xialei Liu, Hakan Bilen,        
-> *CVPR 2022 ([arXiv 2107.00358](https://arxiv.org/pdf/2107.00358))*  
+> *CVPR 2022 ([arXiv 2107.00358](https://arxiv.org/abs/2107.00358))*  
 >
-> [**Universal Representations: A Unified Look at Multiple Task and Domain Learning**](https://arxiv.org/pdf/2204.02744),            
+> [**Universal Representations: A Unified Look at Multiple Task and Domain Learning**](https://arxiv.org/abs/2204.02744),            
 > Wei-Hong Li, Xialei Liu, Hakan Bilen,        
-> *Preprint 2022 ([arXiv 2204.02744](https://arxiv.org/pdf/2204.02744))* 
+> *Preprint 2022 ([arXiv 2204.02744](https://arxiv.org/abs/2204.02744))* 
 
 ## Updates
 * March'22, Code for [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) (CVPR'22) is now available! See [TSA](#cross-domain-few-shot-learning-with-task-specific-adapters).
