@@ -63,10 +63,18 @@ def main():
         # go over each test domain
         for dataset in testsets:
             if dataset in trainsets:
-                lr = 0.05
+                if args['test.tsa_ad_type'] == 'serial' and args['test.tsa_ad_form'] == 'matrix':
+                    lr = 0.001
+                else:
+                    lr = 0.05
                 lr_beta = 0.1
             else:
-                lr = 0.5
+                if args['test.tsa_ad_type'] == 'serial' and args['test.tsa_ad_form'] == 'matrix':
+                    lr = 0.01
+                elif args['test.tsa_ad_form'] == 'vector':
+                    lr = 1
+                else:
+                    lr = 0.5
                 lr_beta = 1
             print(dataset)
             var_accs[dataset] = {name: [] for name in accs_names}
