@@ -18,6 +18,7 @@ A universal representation learning algorithm that learns a set of well-generali
 > *Preprint 2022 ([arXiv 2204.02744](https://arxiv.org/abs/2204.02744))* 
 
 ## Updates
+* November'22, Code of different options for task-specific adapters is released! See [TSA](#cross-domain-few-shot-learning-with-task-specific-adapters).
 * March'22, Code for [Cross-domain Few-shot Learning with Task-specific Adapters](https://arxiv.org/pdf/2107.00358.pdf) (CVPR'22) is now available! See [TSA](#cross-domain-few-shot-learning-with-task-specific-adapters).
 * Oct'21, Code and models for [Universal Representation Learning from Multiple Domains for Few-shot Classification](https://arxiv.org/pdf/2103.13841.pdf) (ICCV'21) are now available!
 
@@ -157,6 +158,8 @@ We provide code for attaching task-specific adapters (TSA) to a single universal
 
 One may want to train the model from scratch from the Meta-training step. For single-domain learning network, see [here](#train-single-domain-learning-networks) to learn a single network from ImageNet with ResNet-18. For multi-domain learning setting, one can learn a URL model (see [here](#train-the-universal-representation-learning-network)) or learn a vanilla MDL model (see [here](#train-a-vanilla-multi-domain-learning-network)). Note that, one may need to amend the input of `--model.name` and `--model.dir` in `./scripts/test_resnet18_tsa.sh` to the model learned from meta-training and amend `--test.mode` to `sdl` if the backbone is learned from ImageNet only in meta-training and then run the TSA.
 
+We also provide implementation of different options for task-specific adapters, including connection topology (serial or residual), parameterizations (matrix or channel-wise), weight initializations (identity or random). See `./scripts/test_resnet18_tsa.sh` for more details. Note that, one can set `shuffle_buffer_size` to 0 in `./data/meta_dataset_reader.py` to obtain the same results as in Table 1 in our TSA paper, but I strongly suggest that one should re-run the experiments using our up-to-date code (the results with `shuffle_buffer_size=1000` would be slightly different from the ones with `shuffle_buffer_size=0` and the rankings will be the same).
+
 ## Expected Results
 Below are the results extracted from our papers. The results will vary from run to run by a percent or two up or down due to the fact that the Meta-Dataset reader generates different tasks each run, randomnes in training the networks and in TSA and PA optimization. Note, the results are updated with the up-to-date evaluation from Meta-Dataset. Make sure that you use the up-to-date code from the Meta-Dataset repository to convert the dataset and set ```shuffle_buffer_size=1000``` as mentioned in https://github.com/google-research/meta-dataset/issues/54.
 
@@ -178,6 +181,9 @@ MSCOCO                     |**55.8±1.1**&nbsp;         |54.0±1.0&nbsp;        
 MNIST                      |**96.7±0.4**&nbsp;         |94.5±0.5&nbsp;             |94.2±0.4&nbsp;             |91.0±0.5&nbsp;             |96.2±0.3&nbsp;             |95.6±0.5&nbsp;             |90.5±0.4&nbsp;             |94.9±0.4&nbsp;             |94.7±0.3&nbsp;             |94.3±0.4&nbsp;             |-         
 CIFAR-10                   |**80.6±0.8**&nbsp;         |71.9±0.7&nbsp;             |63.2±0.8&nbsp;             |65.4±0.8&nbsp;             |75.4±0.8&nbsp;             |78.6±0.7&nbsp;             |65.1±0.8&nbsp;             |64.2±0.9&nbsp;             |73.6±0.7&nbsp;             |72.0±0.8&nbsp;             |-         
 CIFAR-100                  |**69.6±1.0**&nbsp;         |62.6±1.0&nbsp;             |54.7±1.1&nbsp;             |56.2±1.0&nbsp;             |62.0±1.0&nbsp;             |67.1±1.0&nbsp;             |57.2±1.0&nbsp;             |57.1±1.1&nbsp;             |61.8±1.0&nbsp;             |60.9±1.1&nbsp;             |- 
+
+**Models trained on ImageNet only**
+TODO
 
 <div style="text-align:justify; font-size:80%">
     <p>

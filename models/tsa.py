@@ -29,15 +29,42 @@ class conv_tsa(nn.Module):
         planes, in_planes, _, _ = self.conv.weight.size()
         stride, _ = self.conv.stride
         # task-specific adapters
-        if 'alpha' in args['test.tsa_opt']:
-            self.alpha = nn.Parameter(torch.ones(planes, in_planes, 1, 1))
+        if 'alpha' not in args['test.tsa_opt']:
+            self.ad_type = 'none'
+        else:
+            self.ad_type = args['test.tsa_ad_type']
+            self.ad_form = args['test.tsa_ad_form']
+        if self.ad_type == 'residual':
+            if self.ad_form == 'matrix' or planes != in_planes:
+                self.alpha = nn.Parameter(torch.ones(planes, in_planes, 1, 1))
+            else:
+                self.alpha = nn.Parameter(torch.ones(1, planes, 1, 1))
+        elif self.ad_type == 'serial':
+            if self.ad_form == 'matrix':
+                self.alpha = nn.Parameter(torch.ones(planes, planes, 1, 1))
+            else:
+                self.alpha = nn.Parameter(torch.ones(1, planes, 1, 1))
+            self.alpha_bias = nn.Parameter(torch.ones(1, planes, 1, 1))
+            self.alpha_bias.requires_grad = True
+        if self.ad_type != 'none':
             self.alpha.requires_grad = True
 
     def forward(self, x):
         y = self.conv(x)
-        if 'alpha' in args['test.tsa_opt']:
-            # residual adaptation in matrix form
-            y = y + F.conv2d(x, self.alpha, stride=self.conv.stride)
+        if self.ad_type == 'residual':
+            if self.alpha.size(0) > 1:
+                # residual adaptation in matrix form
+                y = y + F.conv2d(x, self.alpha, stride=self.conv.stride)
+            else:
+                # residual adaptation in channel-wise (vector)
+                y = y + x * self.alpha
+        elif self.ad_type == 'serial':
+            if self.alpha.size(0) > 1:
+                # serial adaptation in matrix form
+                y = F.conv2d(y, self.alpha) + self.alpha_bias
+            else:
+                # serial adaptation in channel-wise (vector)
+                y = y * self.alpha + self.alpha_bias
         return y
 
 class pa(nn.Module):
@@ -58,9 +85,10 @@ class pa(nn.Module):
         return x
 
 class resnet_tsa(nn.Module):
-    """ Attaching task-specific adapters (alpha) and/or PA (beta) to the ResNet backbone """
+   """ Attaching task-specific adapters (alpha) and/or PA (beta) to the ResNet backbone """
     def __init__(self, orig_resnet):
         super(resnet_tsa, self).__init__()
+        self.tsa_init = args['test.tsa_init']
         # freeze the pretrained backbone
         for k, v in orig_resnet.named_parameters():
                 v.requires_grad=False
@@ -113,15 +141,27 @@ class resnet_tsa(nn.Module):
         return [v for k, v in self.backbone.named_parameters()]
 
     def reset(self):
+
         # initialize task-specific adapters (alpha)
         for k, v in self.backbone.named_parameters():
             if 'alpha' in k:
-                v.data = torch.eye(v.size(0), v.size(1)).unsqueeze(-1).unsqueeze(-1).to(v.device) * 0.0001
-
+                # initialize each adapter as an identity matrix
+                if self.tsa_init == 'eye':
+                    if v.size(0) > 1:
+                        v.data = torch.eye(v.size(0), v.size(1)).unsqueeze(-1).unsqueeze(-1).to(v.device)
+                    else:
+                        v.data = torch.ones(v.size()).to(v.device)
+                    # for residual adapter, each adapter is initialized as identity matrix scaled by 0.0001
+                    if  args['test.tsa_ad_type'] == 'residual':
+                        v.data = v.data * 0.0001
+                    if 'bias' in k:
+                        v.data = v.data * 0
+                elif self.tsa_init == 'random':
+                    # randomly initialization
+                    v.data = torch.rand(v.data.size()).data.normal_(0, 0.001).to(v.device)
         # initialize pre-classifier alignment mapping (beta)
         v = self.beta.weight
         self.beta.weight.data = torch.eye(v.size(0), v.size(1)).unsqueeze(-1).unsqueeze(-1).to(v.device)
-
 
 def tsa(context_images, context_labels, model, max_iter=40, lr=0.1, lr_beta=1, distance='cos'):
     """
