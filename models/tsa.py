@@ -85,7 +85,7 @@ class pa(nn.Module):
         return x
 
 class resnet_tsa(nn.Module):
-   """ Attaching task-specific adapters (alpha) and/or PA (beta) to the ResNet backbone """
+    """ Attaching task-specific adapters (alpha) and/or PA (beta) to the ResNet backbone """
     def __init__(self, orig_resnet):
         super(resnet_tsa, self).__init__()
         self.tsa_init = args['test.tsa_init']
