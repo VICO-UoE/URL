@@ -29,6 +29,8 @@ A universal representation learning algorithm that learns a set of well-generali
 
 - We propose to attach a set of light weight task-specific adapters to the universal network (the universal network can be learned from multiple datasets or one single diverse dataset, e.g. ImageNet) and learn task-specific adapters on the support set from scratch for adapting the few-shot model to the tasks from unseen domains.
 
+- Our method also allows Low Rank Adaptation (LoRA), i.e. learning the attached adapters can be treating as learning two decomposed matrices, which is more efficient while maintains good performance.
+
 - We systematically study various combinations of several design choices for task-specific adaptation, which have not been explored before, including adapter connection types (serial or residual), parameterizations (matrix and its decomposed variations, channelwise operations) and estimation of task-specific parameters.
 
 - Attaching parameteric adapters in matrix form to convolutional layers with residual connections significantly boosts the state-of-the-art performance in most domains, especially resulting in superior performance in unseen domains on Meta-Dataset
