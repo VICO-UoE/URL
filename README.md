@@ -15,7 +15,7 @@ A universal representation learning algorithm that learns a set of well-generali
 >
 > [**Universal Representations: A Unified Look at Multiple Task and Domain Learning**](https://arxiv.org/abs/2204.02744),            
 > Wei-Hong Li, Xialei Liu, Hakan Bilen,        
-> *Preprint 2022 ([arXiv 2204.02744](https://arxiv.org/abs/2204.02744))* 
+> *IJCV 2023 ([arXiv 2204.02744](https://arxiv.org/abs/2204.02744))* 
 
 ## Updates
 * November'22, Code of different options for task-specific adapters is released! See [TSA](#cross-domain-few-shot-learning-with-task-specific-adapters).
@@ -259,11 +259,13 @@ For any question, you can contact [Wei-Hong Li](https://weihonglee.github.io).
 ## Citation
 If you use this code, please cite our papers:
 ```
-@article{li2022Universal,
+@article{li2023Universal,
     author    = {Li, Wei-Hong and Liu, Xialei and Bilen, Hakan},
     title     = {Universal Representations: A Unified Look at Multiple Task and Domain Learning},
-    journal   = {arXiv preprint arXiv:2204.02744},
-    year      = {2022}
+    journal   = {International Journal of Computer Vision},
+    pages     = {1--25},
+    year      = {2023},
+    publisher = {Springer}
 }
 
 @inproceedings{li2022TaskSpecificAdapter,
